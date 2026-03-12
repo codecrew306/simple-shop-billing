@@ -125,8 +125,9 @@ export default function TabsPage() {
               <label className="text-sm font-medium text-foreground block mb-1.5">Amount Received</label>
               <input value={amountReceived} onChange={e => setAmountReceived(e.target.value)} className={inputClass} type="number" placeholder="₹0" />
             </div>
-            {parseFloat(amountReceived) > (paymentTab.total - paymentTab.paid) && (
-              <p className="text-xs text-success font-mono mb-3">Change: ₹{(parseFloat(amountReceived) - (paymentTab.total - paymentTab.paid)).toLocaleString()}</p>
+            {parseFloat(amountReceived) > 0 && parseFloat(amountReceived) < (paymentTab.total - paymentTab.paid) && (
+              <p className="text-xs text-muted-foreground font-mono mb-3">Remaining after payment: ₹{((paymentTab.total - paymentTab.paid) - parseFloat(amountReceived)).toLocaleString()}</p>
+            )}
             )}
             <div className="flex gap-3">
               <button onClick={() => setPaymentTab(null)} className="flex-1 h-11 border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted transition-colors">Cancel</button>
