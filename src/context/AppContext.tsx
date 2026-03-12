@@ -46,6 +46,7 @@ interface AppState {
   addTransaction: (t: Transaction) => void;
   addTab: (tab: Tab) => void;
   settleTab: (id: string) => void;
+  updateTabPayment: (id: string, amount: number) => void;
   setStoreName: (n: string) => void;
   setOwnerName: (n: string) => void;
 }
@@ -99,9 +100,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const addTransaction = (t: Transaction) => setTransactions(prev => [t, ...prev]);
   const addTab = (tab: Tab) => setTabs(prev => [tab, ...prev]);
   const settleTab = (id: string) => setTabs(prev => prev.filter(t => t.id !== id));
+  const updateTabPayment = (id: string, amount: number) => {
+    setTabs(prev => prev.map(t => t.id === id ? { ...t, paid: t.paid + amount } : t));
+  };
 
   return (
-    <AppContext.Provider value={{ isLoggedIn, storeName, storeId: "SHOP-7X9K2M", ownerName, cart, transactions, tabs, login, logout, addToCart, updateCartQuantity, removeFromCart, clearCart, addTransaction, addTab, settleTab, setStoreName, setOwnerName }}>
+    <AppContext.Provider value={{ isLoggedIn, storeName, storeId: "SHOP-7X9K2M", ownerName, cart, transactions, tabs, login, logout, addToCart, updateCartQuantity, removeFromCart, clearCart, addTransaction, addTab, settleTab, updateTabPayment, setStoreName, setOwnerName }}>
       {children}
     </AppContext.Provider>
   );

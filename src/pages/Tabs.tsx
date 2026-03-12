@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { X, CheckCircle } from "lucide-react";
 
 export default function TabsPage() {
-  const { tabs, settleTab, addTransaction } = useApp();
+  const { tabs, settleTab, updateTabPayment, addTransaction } = useApp();
   const [selectedTab, setSelectedTab] = useState<Tab | null>(null);
   const [paymentTab, setPaymentTab] = useState<Tab | null>(null);
   const [amountReceived, setAmountReceived] = useState("");
@@ -13,20 +13,28 @@ export default function TabsPage() {
     if (!paymentTab) return;
     const amt = parseFloat(amountReceived) || 0;
     const outstanding = paymentTab.total - paymentTab.paid;
-    if (amt < outstanding) { toast.error("Amount must cover outstanding balance"); return; }
+    if (amt <= 0) { toast.error("Enter a valid amount"); return; }
+    if (amt > outstanding) { toast.error("Amount exceeds outstanding balance"); return; }
 
-    addTransaction({
-      id: `t-${Date.now()}`,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
-      customer: paymentTab.customer,
-      phone: paymentTab.phone,
-      items: paymentTab.items,
-      total: paymentTab.total,
-      payment: "Cash",
-    });
-    settleTab(paymentTab.id);
-    toast.success("Tab settled");
+    if (amt >= outstanding) {
+      // Full settlement
+      addTransaction({
+        id: `t-${Date.now()}`,
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+        customer: paymentTab.customer,
+        phone: paymentTab.phone,
+        items: paymentTab.items,
+        total: paymentTab.total,
+        payment: "Cash",
+      });
+      settleTab(paymentTab.id);
+      toast.success("Tab fully settled!");
+    } else {
+      // Partial payment
+      updateTabPayment(paymentTab.id, amt);
+      toast.success(`₹${amt.toLocaleString()} received. Outstanding: ₹${(outstanding - amt).toLocaleString()}`);
+    }
     setPaymentTab(null);
     setAmountReceived("");
   };
@@ -117,8 +125,8 @@ export default function TabsPage() {
               <label className="text-sm font-medium text-foreground block mb-1.5">Amount Received</label>
               <input value={amountReceived} onChange={e => setAmountReceived(e.target.value)} className={inputClass} type="number" placeholder="₹0" />
             </div>
-            {parseFloat(amountReceived) > (paymentTab.total - paymentTab.paid) && (
-              <p className="text-xs text-success font-mono mb-3">Change: ₹{(parseFloat(amountReceived) - (paymentTab.total - paymentTab.paid)).toLocaleString()}</p>
+            {parseFloat(amountReceived) > 0 && parseFloat(amountReceived) < (paymentTab.total - paymentTab.paid) && (
+              <p className="text-xs text-muted-foreground font-mono mb-3">Remaining after payment: ₹{((paymentTab.total - paymentTab.paid) - parseFloat(amountReceived)).toLocaleString()}</p>
             )}
             <div className="flex gap-3">
               <button onClick={() => setPaymentTab(null)} className="flex-1 h-11 border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted transition-colors">Cancel</button>
