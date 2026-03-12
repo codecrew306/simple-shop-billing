@@ -108,6 +108,8 @@ export default function TabsPage() {
             </div>
           </div>
         </div>
+      )}
+
       {/* Payment Modal */}
       {paymentTab && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setPaymentTab(null)}>
@@ -125,7 +127,6 @@ export default function TabsPage() {
             </div>
             {parseFloat(amountReceived) > 0 && parseFloat(amountReceived) < (paymentTab.total - paymentTab.paid) && (
               <p className="text-xs text-muted-foreground font-mono mb-3">Remaining after payment: ₹{((paymentTab.total - paymentTab.paid) - parseFloat(amountReceived)).toLocaleString()}</p>
-            )}
             )}
             <div className="flex gap-3">
               <button onClick={() => setPaymentTab(null)} className="flex-1 h-11 border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted transition-colors">Cancel</button>
