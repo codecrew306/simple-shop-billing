@@ -46,6 +46,7 @@ interface AppState {
   addTransaction: (t: Transaction) => void;
   addTab: (tab: Tab) => void;
   settleTab: (id: string) => void;
+  updateTabPayment: (id: string, amount: number) => void;
   setStoreName: (n: string) => void;
   setOwnerName: (n: string) => void;
 }
