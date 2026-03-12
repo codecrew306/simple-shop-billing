@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { X, CheckCircle } from "lucide-react";
 
 export default function TabsPage() {
-  const { tabs, settleTab, addTransaction } = useApp();
+  const { tabs, settleTab, updateTabPayment, addTransaction } = useApp();
   const [selectedTab, setSelectedTab] = useState<Tab | null>(null);
   const [paymentTab, setPaymentTab] = useState<Tab | null>(null);
   const [amountReceived, setAmountReceived] = useState("");
