@@ -47,16 +47,27 @@ export default function Dashboard() {
               <button key={f} onClick={() => setChartFilter(f)} className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-colors ${chartFilter === f ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>{f}</button>
             ))}
           </div>
-          {/* Simulated chart */}
+          {/* Dynamic chart based on filter */}
           <div className="h-40 flex items-end gap-1">
-            {[35, 50, 40, 65, 55, 80, 70, 90, 75, 95, 85, 100].map((h, i) => (
+            {(chartFilter === "1W" 
+              ? [45, 60, 55, 70, 65, 80, 75] 
+              : chartFilter === "1M"
+              ? [40, 55, 50, 65, 60, 75, 70, 85, 80, 90, 85, 95]
+              : [35, 50, 40, 65, 55, 80, 70, 90, 75, 95, 85, 100]
+            ).map((h, i) => (
               <div key={i} className="flex-1 bg-primary/20 rounded-t-sm relative group cursor-pointer hover:bg-primary/40 transition-colors" style={{ height: `${h}%` }}>
                 <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] font-mono text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">₹{(h * 50)}</div>
               </div>
             ))}
           </div>
           <div className="flex justify-between mt-2 text-[10px] text-muted-foreground font-mono">
-            <span>Jan</span><span>Mar</span><span>Jun</span><span>Sep</span><span>Dec</span>
+            {chartFilter === "1W" ? (
+              <><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></>
+            ) : chartFilter === "1M" ? (
+              <><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W1</span><span>W2</span><span>W3</span><span>W4</span></>
+            ) : (
+              <><span>W1</span><span>W4</span><span>W8</span><span>W12</span></>
+            )}
           </div>
         </div>
       </section>
