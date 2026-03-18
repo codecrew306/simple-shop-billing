@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useApp, type CartItem } from "@/context/AppContext";
 import { toast } from "sonner";
-import { Plus, Minus, X, ChevronDown, ChevronUp, ScanBarcode, Zap, AlertTriangle, User, ShoppingBag, PackagePlus } from "lucide-react";
+import { Plus, Minus, X, ChevronDown, ChevronUp, ScanBarcode, Smartphone, User, ShoppingBag, PackagePlus } from "lucide-react";
 import AddProductModal from "@/components/modals/AddProductModal";
 import ReceiptModal from "@/components/modals/ReceiptModal";
 
