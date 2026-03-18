@@ -115,27 +115,30 @@ export default function Billing() {
 
       <div className="px-4 space-y-4">
         {/* Scanner Section - Compact pill-style action bar */}
-        <section className="bg-card rounded-2xl card-shadow overflow-hidden">
-          <div className="bg-gradient-to-br from-[hsl(var(--navy-deep))] to-[hsl(var(--navy-medium))] p-5 flex flex-col items-center gap-3">
-            <div className="w-14 h-14 rounded-full bg-primary/15 flex items-center justify-center border-2 border-primary/30">
-              <ScanBarcode size={26} className="text-primary" />
+        <section className="bg-card rounded-2xl card-shadow overflow-hidden border border-border">
+          <div className="bg-accent/5 p-4 flex items-center gap-3 border-b border-border">
+            <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+              <ScanBarcode size={20} className="text-accent" />
             </div>
-            <p className="text-xs text-primary/70 font-medium tracking-wide uppercase">Barcode Scanner</p>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Scan Product</p>
+              <p className="text-[11px] text-muted-foreground">Choose your scanning method</p>
+            </div>
           </div>
-          <div className="p-3 flex gap-2">
+          <div className="p-3 grid grid-cols-2 gap-2">
             <button
               onClick={simulateScan}
-              className="flex-1 h-11 bg-primary text-primary-foreground rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 hover:brightness-110 transition-all active:scale-[0.98]"
+              className="h-12 bg-accent text-accent-foreground rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98]"
             >
-              <Zap size={14} />
-              Scan
+              <ScanBarcode size={16} />
+              Barcode Scanner
             </button>
             <button
-              onClick={simulateError}
-              className="h-11 px-4 border border-destructive/30 text-destructive rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-destructive/5 transition-colors active:scale-[0.98]"
+              onClick={simulatePhoneScan}
+              className="h-12 border-2 border-accent text-accent rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:bg-accent/5 transition-colors active:scale-[0.98]"
             >
-              <AlertTriangle size={14} />
-              Error
+              <Smartphone size={16} />
+              Phone Camera
             </button>
           </div>
         </section>
