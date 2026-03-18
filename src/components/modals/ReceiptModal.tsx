@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, Printer, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import type { Transaction } from "@/context/AppContext";
 
