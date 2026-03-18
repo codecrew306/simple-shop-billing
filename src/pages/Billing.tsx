@@ -106,10 +106,10 @@ export default function Billing() {
         </div>
         <button
           onClick={() => setShowAddProduct(true)}
-          className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center hover:opacity-90 transition-opacity shadow-md"
-          title="Add New Product"
+          className="h-9 px-4 rounded-full bg-accent text-accent-foreground flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-md text-xs font-semibold"
         >
-          <PackagePlus size={18} />
+          <PackagePlus size={15} />
+          Add Item
         </button>
       </div>
 
